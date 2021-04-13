@@ -40,7 +40,6 @@ const HomeScreen = {
                                 alt="product-${prod._id}">
                         </a>
                         <div class="product-name">
-                            
                             <a href="/#/product/${prod._id}">
                                 ${prod.name}
                             </a>
