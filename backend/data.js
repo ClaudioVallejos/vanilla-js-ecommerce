@@ -39,7 +39,7 @@ export default {
       brand: "Honner",
       rating: 4.5,
       numReview: 13,
-      countStock: 6,
+      countStock: 3,
     },
     {
       _id: "4",
@@ -52,7 +52,7 @@ export default {
       brand: "Honner",
       rating: 0,
       numReview: 0,
-      countStock: 6,
+      countStock: 5,
     },
     {
       _id: "5",
@@ -78,7 +78,7 @@ export default {
       brand: "Honner",
       rating: 1.5,
       numReview: 75,
-      countStock: 6,
+      countStock: 10,
     },
   ],
 };

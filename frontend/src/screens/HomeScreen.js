@@ -35,7 +35,7 @@ const HomeScreen = {
                             <img src="${
                               prod.image_url
                                 ? prod.image_url
-                                : "../images/imagen-no-disponible.png"
+                                : '../images/imagen-no-disponible.png'
                             }"
                                 alt="product-${prod._id}">
                         </a>
