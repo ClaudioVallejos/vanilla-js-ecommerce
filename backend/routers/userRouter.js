@@ -3,6 +3,8 @@ import User from '../models/userModel';
 
 const userRouter = express.Router();
 
+
+//definición de rutas para crear admin
 userRouter.get("/createadmin", async (req, res) => {
     try{
         const user = new User({
