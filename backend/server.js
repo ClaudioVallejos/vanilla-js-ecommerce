@@ -1,12 +1,28 @@
 import express from "express";
 import cors from "cors";
 import data from "./data";
+import mongoose from 'mongoose';
+import config from "./config";
+import userRouter from "./routers/userRouter";
+
+mongoose
+.connect(config.MONGODB_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true
+})
+.then(() => console.log("conectado a mongoDB") )
+.catch(err => {
+  console.log(err.reason);
+})
 
 const port = 3000;
-
 const app = express();
-
 app.use(cors());
+
+//usamos el middleWare de rutas para el usuario
+app.use("/api/users/", userRouter);
+
 
 app.get("/api/product", (req, res) => {
   res.status(200).send(data.products);
@@ -22,5 +38,5 @@ app.get("/api/product/:id", (req, res) => {
 });
 
 app.listen(port, () => {
-  console.log("server running at http://localhost:3000");
+  console.log("Server running at http://localhost:3000");
 });
