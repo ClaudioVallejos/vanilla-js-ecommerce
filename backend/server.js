@@ -3,6 +3,7 @@ import cors from "cors";
 import data from "./data";
 import mongoose from 'mongoose';
 import config from "./config";
+import bodyParser from "body-parser";
 import userRouter from "./routers/userRouter";
 
 //conexión a mongoDB
@@ -20,6 +21,7 @@ mongoose
 //constantes de entorno
 const port = 3000;
 const app = express();
+app.use(express.json());
 app.use(cors());
 
 //usamos el middleWare de rutas para el usuario
@@ -39,6 +41,12 @@ app.get("/api/product/:id", (req, res) => {
   } else {
     res.status(404).send({ message: "product not found!! 404" });
   }
+});
+
+app.use((err, req, res, next) => {
+  //si el error capturado es un error de validacion manda 400, si no, el servidor tiene algo 500
+  const status = err.name && err.name === 'ValidationError' ? 400 : 500;
+  res.status(status).send({message: err.message});
 });
 
 //escucha del servidor
