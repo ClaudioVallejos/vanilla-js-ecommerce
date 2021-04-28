@@ -3,7 +3,6 @@ import cors from "cors";
 import data from "./data";
 import mongoose from 'mongoose';
 import config from "./config";
-import bodyParser from "body-parser";
 import userRouter from "./routers/userRouter";
 
 //conexión a mongoDB
@@ -28,13 +27,13 @@ app.use(cors());
 app.use("/api/users/", userRouter);
 
 //middle
-app.get("/api/product", (req, res) => {
+app.get("/api/products", (req, res) => {
   res.status(200).send(data.products);
 });
 
 
 //busqueda de productos según parametros de URL
-app.get("/api/product/:id", (req, res) => {
+app.get("/api/products/:id", (req, res) => {
   const productFiltered = data.products.find((x) => x._id === req.params.id);
   if (productFiltered) {
     res.status(200).send(productFiltered);

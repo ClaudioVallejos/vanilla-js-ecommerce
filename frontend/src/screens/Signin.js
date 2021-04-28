@@ -1,31 +1,59 @@
+import { signin } from "../api";
+import { getUserInfo, setUserInfo } from "../localStorage";
+
 const SigninScreen = {
-    after_render: () => { },
+    after_render: () => {
+        //para el signin del usuario capturamos el evento submit del formulario
+        //ejecutamos una funcion asincrona de que hace el signin en api.js
+        document.getElementById('signin-form')
+        .addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const data = await signin({
+                email : document.getElementById('email').value,
+                password : document.getElementById('password').value,
+            });
+
+            if(data.error){
+                alert(data.error);
+            }else{
+                //guardamos en localStorage
+                setUserInfo(data);
+                document.location.hash = '/';
+            }
+        });
+
+    },
     render: () => {
+        //si la función devuelve el valor de name, quiere decir que el usuario está logeado ya. 
+        //(por la respuesta del back almacenada en el localStorage)
+        if(getUserInfo().name){
+          return document.location.hash = '/';
+        };
         return `
             <div class="form-container">
-                <form class="signin-form">
-                <ul class="form-items">
-                    <li>
-                        <h1> Sign-in <h1>
-                    </li>
-                    <li>
-                        <label for="email"> Email </label>
-                        <input type="email" name="email" id="email"/>
-                    </li>
-                    <li>
-                        <label for="password"> Contraseña </label>
-                        <input type="password" name="password" id="password"/>
-                    </li>
-                    <li>
-                        <button type="submit" class="primary"> Iniciar Sesión </button>
-                    </li>
-                    <li>
-                        <div>
-                             Usuario Nuevo?
-                            <a href="/#/register">Crea tu cuenta</a>
-                        </div>
-                    </li>
-                </ul>
+                <form id="signin-form">
+                    <ul class="form-items">
+                        <li>
+                            <h1> Sign-in <h1>
+                        </li>
+                        <li>
+                            <label for="email"> Email </label>
+                            <input type="email" name="email" id="email"/>
+                        </li>
+                        <li>
+                            <label for="password"> Contraseña </label>
+                            <input type="password" name="password" id="password"/>
+                        </li>
+                        <li>
+                            <button type="submit" class="primary"> Iniciar Sesión </button>
+                        </li>
+                        <li>
+                            <div>
+                                Usuario Nuevo?
+                                <a href="/#/register">Crea tu cuenta</a>
+                            </div>
+                        </li>
+                    </ul>
                 </form>
             </div>
         `;

@@ -13,7 +13,7 @@ const HomeScreen = {
   render: async () => {
     // obtengo los datos haciendo fetch a la url de la API
     const response = await axios({
-      url: apiUrl,
+      url: `${apiUrl}/products`,
       headers: {
         "Content-type": "application/json",
       },

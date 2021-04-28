@@ -36,8 +36,10 @@ userRouter.post("/signin", expressAsyncHandler(async (req, res) => {
         //si encontró un usuario, devolvemos el usuario con su token de sesion
         //que se generará en utils.js
         res.status(200).send({
-            _id: signinUser.name,
+            _id: signinUser._id,
+            name: signinUser.name,
             email: signinUser.email,
+            password: signinUser.password,
             isAdmin: signinUser.isAdmin,
             token: generateToken(signinUser)
         });

@@ -1,5 +1,4 @@
 //función que detecta el cambio de la url y obtiene los atributos correspondientes
-
 export const parseRequestUrl = () => {
     const url = document.location.hash.toLowerCase();
     const request = url.split("/");
@@ -10,7 +9,7 @@ export const parseRequestUrl = () => {
     };
 };
 
-export const apiUrl = "http://localhost:3000/api/product";
+export const apiUrl = "http://localhost:3000/api";
 
 // función que obtiene el objeto "componente y le hace un iner html nuevamente a su propiedad
 // .render() y .after_render()"

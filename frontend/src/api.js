@@ -1,8 +1,10 @@
 import axios from "axios";
 import { apiUrl } from "./utils";
 
+//obtener todos los productos de la api
 export const getProduct = async (id) => {
-  let changeableUrl = `${apiUrl}/${id}`;
+
+  let changeableUrl = `${apiUrl}/products/${id}`;
 
   try {
     const response = await axios({
@@ -11,7 +13,7 @@ export const getProduct = async (id) => {
       headers: { "Content-type": "Application-json" },
     });
 
-    //si la solicitud no viene con status OK! se instancia un nuevo error con el mensaje de error
+    //si la solicitud no viene con status OK! creamos un nuevo error con el mensaje de error
     //proveniente del backend
     if (response.statusText !== "OK") {
       throw new Error(response.data.message);
@@ -24,3 +26,30 @@ export const getProduct = async (id) => {
     return { error: err.response.data.message || err.message };
   }
 };
+
+//signin a usuario
+export const signin = async ({email, password}) => {
+  let changeableUrl = `${apiUrl}/users/signin`;
+  try {
+    const response = await axios({
+      url: changeableUrl,
+      method: 'POST',
+      //MUCHO OJO CON LOS HEADERS CUANDO NO LLEGUE LA INFO AL BACK
+      headers: {'Content-Type': 'Application/json'},
+      data:{
+        email,
+        password
+      },
+   });
+    //si la solicitud no viene con status OK! creamos un nuevo error con el mensaje de error
+    //proveniente del backend
+   if(response.statusText !== "OK"){
+     throw new Error(response.data.message);
+   }
+   //de otra forma devuelveme la data
+   return response.data;
+  } catch (err) {
+    console.log(err);
+    return {error :  err.response.data.message || err.message};
+  }
+}
