@@ -46,4 +46,31 @@ userRouter.post("/signin", expressAsyncHandler(async (req, res) => {
     };
 }));
 
+//definición de rutas para registro de usuario
+userRouter.post("/register", expressAsyncHandler(async (req, res) => {
+    
+    const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: req.body.password
+    });
+
+    const createdUser = await user.save();
+
+    if (!createdUser) {
+        return res.status(401).send({ message: "Datos invalidos" });
+    }else{
+        //si encontró un usuario, devolvemos el usuario con su token de sesion
+        //que se generará en utils.js
+        res.status(200).send({
+            _id: createdUser._id,
+            name: createdUser.name,
+            email: createdUser.email,
+            password: createdUser.password,
+            isAdmin: createdUser.isAdmin,
+            token: generateToken(createdUser)
+        });
+    };
+}));
+
 export default userRouter;

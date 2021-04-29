@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
     password: {type: String, required: true},
-    isAdmin: {type: Boolean, required: true, defaul: false}
+    isAdmin: {type: Boolean, defaul: false}
 });
 //creamos el modelo pasandole la "Coleccion" y el "Schema" Actual
 const User = mongoose.model('User', userSchema);
