@@ -4,13 +4,15 @@
 
 import axios from "axios";
 import Rating from "../components/Rating";
-import { apiUrl } from "../utils";
+import { apiUrl, hideLoading, showLoading } from "../utils";
 
 const HomeScreen = {
   after_render: () =>{
         
   },
   render: async () => {
+
+    showLoading();
     // obtengo los datos haciendo fetch a la url de la API
     const response = await axios({
       url: `${apiUrl}/products`,
@@ -18,6 +20,7 @@ const HomeScreen = {
         "Content-type": "application/json",
       },
     });
+    hideLoading();
 
     if (!response || response.statusText !== "OK") {
       return "<div> error in getting data </div>";

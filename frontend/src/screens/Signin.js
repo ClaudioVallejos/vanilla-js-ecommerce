@@ -1,5 +1,6 @@
 import { signin } from "../api";
 import { getUserInfo, setUserInfo } from "../localStorage";
+import { hideLoading, showLoading, showMessage } from "../utils";
 
 const SigninScreen = {
     after_render: () => {
@@ -8,13 +9,20 @@ const SigninScreen = {
         document.getElementById('signin-form')
         .addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            //pant carga
+            showLoading();
+
             const data = await signin({
                 email : document.getElementById('email').value,
                 password : document.getElementById('password').value,
             });
 
+            //esconderPant carga
+            hideLoading();
+
             if(data.error){
-                alert(data.error);
+                showMessage(data.error);
             }else{
                 //guardamos en localStorage
                 setUserInfo(data);

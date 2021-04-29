@@ -18,3 +18,37 @@ export const rerender = async (component) => {
     document.getElementById("main-container").innerHTML = await component.render();
     await component.after_render();
 }
+
+//funciones que muestran y esconden pantallas de carga añadiendo palabra a la clase
+export const showLoading = () => {
+    document.getElementById('loading-overlay').classList.add('active');
+}
+
+export const hideLoading = () => {
+    document.getElementById('loading-overlay').classList.remove('active');
+}
+
+//funciones que muestran y esconden pantallas de mensaje añadiendo palabra a la clase
+export const showMessage = (message, callback = false) => {
+    //primero cargamos la info
+    document.getElementById('message-overlay').innerHTML = `
+        <div>
+            <div id="message-overlay-content">
+                ${message}
+            </div>
+            <button id="message-overlay-close-button">OK!</button>
+        </div>
+    `;
+    //la mostramos
+    document.getElementById('message-overlay').classList.add('active');
+    //boton ocultar, que puede tener un callback como acción opcional
+    document.getElementById('message-overlay-close-button')
+    .addEventListener('click', () => {
+        document.getElementById('message-overlay').classList.remove('active');
+        if(callback){
+            callback();
+        }
+    })
+
+
+}

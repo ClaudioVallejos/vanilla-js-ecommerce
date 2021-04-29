@@ -6,7 +6,7 @@ import SigninScreen from "./screens/Signin.js";
 import Header from './components/Header.js'
 
 
-import { parseRequestUrl } from "./utils.js";
+import { hideLoading, parseRequestUrl, showLoading } from "./utils.js";
 
 const routes = {
   "/": HomeScreen,
@@ -17,6 +17,9 @@ const routes = {
 };
 
 const router = async () => {
+
+  showLoading();
+
   const request = parseRequestUrl();
   // la constante parseUrl genera una url segun existencia de los parametros en la URL
   const parseUrl =
@@ -37,6 +40,8 @@ const router = async () => {
   // renderizado en HTML
   main.innerHTML = await screen.render();
   await screen.after_render();
+
+  hideLoading();
 };
 
 window.addEventListener("load", router);

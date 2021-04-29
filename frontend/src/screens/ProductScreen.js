@@ -1,5 +1,5 @@
 import { getProduct } from "./../api";
-import { parseRequestUrl } from "../utils";
+import { hideLoading, parseRequestUrl, showLoading } from "../utils";
 import Rating from "./../components/Rating";
 
 //objeto con metodo de renderizado de producto
@@ -13,13 +13,18 @@ const ProductScreen = {
     },
   render: async () => {
     const request = parseRequestUrl();
+
+    showLoading();
     //getProduct() espera una respuesta
     const product = await getProduct(request.id);
+    
     if (product.error) {
       return `
             <div> ${product.error}</div>
         `;
     }
+    hideLoading();
+    
     return `
         <div class="content">
             <div class="back-to-result">
