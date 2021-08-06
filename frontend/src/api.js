@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getUserInfo } from "./localStorage";
 import { apiUrl } from "./utils";
 
 //obtener todos los productos de la api
@@ -69,6 +70,41 @@ export const register = async ({name, email, password}) => {
         password
       },
    });
+    //si la solicitud no viene con status OK! creamos un nuevo error con el mensaje de error
+    //proveniente del backend
+   if(response.statusText !== "OK"){
+     throw new Error(response.data.message);
+   }
+   //de otra forma devuelveme la data
+   return response.data;
+  } catch (err) {
+    console.log(err);
+    return {error :  err.response.data.message || err.message};
+  }
+}
+
+//acutaliza usuario
+export const update = async ({name, email, password}) => {
+  const {_id, token} = getUserInfo()
+
+  let changeableUrl = `${apiUrl}/users/${_id}`;
+  try {
+    const response = await axios({
+      url: changeableUrl,
+      method: 'PUT',
+      //MUCHO OJO CON LOS HEADERS CUANDO NO LLEGUE LA INFO AL BACK
+      headers: {
+        'Content-Type': 'Application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      data:{
+        name,
+        email,
+        password
+      },
+   });
+
+   console.log("response del back", response)
     //si la solicitud no viene con status OK! creamos un nuevo error con el mensaje de error
     //proveniente del backend
    if(response.statusText !== "OK"){
