@@ -1,9 +1,15 @@
 import { update } from "../api";
-import { getUserInfo, setUserInfo } from "../localStorage";
+import { getUserInfo, setUserInfo, clearUserInfo } from "../localStorage";
 import { hideLoading, showLoading, showMessage } from "../utils";
 
 const ProfileScreen = {
     after_render: () => {
+        //logout
+        document.getElementById('logout-button').addEventListener('click', () =>{
+            clearUserInfo();
+            document.location.hash = '/';
+        })
+
         //para el update del usuario capturamos el evento submit del formulario
         //ejecutamos una funcion asincrona de que hace el update en api.js
         document.getElementById('profile-form')
@@ -63,6 +69,9 @@ const ProfileScreen = {
                         </li>
                         <li>
                             <button type="submit" class="primary"> Actualiza </button>
+                        </li>
+                        <li>
+                            <button type="button" id="logout-button"> Cerrar Sesión </button>
                         </li>
                     </ul>
                 </form>

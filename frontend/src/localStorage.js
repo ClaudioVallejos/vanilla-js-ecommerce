@@ -36,3 +36,7 @@ export const getUserInfo = () => {
     : {name:'', email:'', password:''};
     return userInfo;
 }
+
+export const clearUserInfo = () => {
+    localStorage.removeItem('userInfo');
+}
