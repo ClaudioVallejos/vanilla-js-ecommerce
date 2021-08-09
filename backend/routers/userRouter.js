@@ -1,7 +1,7 @@
 import express from 'express';
 import User from '../models/userModel';
 import expressAsyncHandler from 'express-async-handler';
-import { generateToken } from '../utils';
+import { generateToken, isAuth } from '../utils';
 
 const userRouter = express.Router();
 
@@ -92,7 +92,7 @@ userRouter.post("/register", expressAsyncHandler(async (req, res) => {
 //definición de rutas para actualizar registro de usuario
 
 //definición de rutas para registro de usuario
-userRouter.put("/:id", expressAsyncHandler(async (req, res) => {
+userRouter.put("/:id", isAuth, expressAsyncHandler(async (req, res) => {
 
     const user = await User.findById(req.params.id)
 

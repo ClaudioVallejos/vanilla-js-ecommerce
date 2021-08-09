@@ -13,3 +13,21 @@ export const generateToken = (user) => {
     config.JWT_SECRET
     );
 }
+//middleware para ver si está autenticado quien hace la petición (middleware de autenticacion)
+export const isAuth = (req, res, next) => {
+    //veo si la cabezera viene con el token
+    const bearerToken = req.headers.authorization;
+        if(!bearerToken){
+            res.status(401).send({message: 'Token is not supplied'})
+        }else{
+            const token = bearerToken.slice( 7, bearerToken.length);
+            jwt.verify(token, config.JWT_SECRET, (err, data) => {
+                if(err) {
+                    res.status(401).send({message: 'Invalid token'})
+                }else{
+                    req.user = data;
+                    next();
+                }
+            });
+        }
+}

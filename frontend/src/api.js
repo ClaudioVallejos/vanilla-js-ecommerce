@@ -103,8 +103,6 @@ export const update = async ({name, email, password}) => {
         password
       },
    });
-
-   console.log("response del back", response)
     //si la solicitud no viene con status OK! creamos un nuevo error con el mensaje de error
     //proveniente del backend
    if(response.statusText !== "OK"){
