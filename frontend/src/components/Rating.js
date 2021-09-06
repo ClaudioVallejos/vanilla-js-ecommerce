@@ -1,4 +1,3 @@
-// commit otroooooooooooo
 const Rating = {
   render: (props) => {
     if (!props.rating) {

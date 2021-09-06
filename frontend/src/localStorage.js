@@ -37,6 +37,37 @@ export const getUserInfo = () => {
     return userInfo;
 }
 
+//limpiamos la sesion del usuario
 export const clearUserInfo = () => {
     localStorage.removeItem('userInfo');
+}
+
+export const setShipping = ({address = '', city ='', phoneNumber =''}) => {
+    localStorage.setItem('shippingInfo', JSON.stringify({address, city, phoneNumber}))
+}
+
+//obtener datos de envio
+export const getShippingInfo = () => {
+    const shippingInfo = localStorage.getItem('shippingInfo') 
+    ? JSON.parse(localStorage.getItem('shippingInfo'))
+    : {
+        address: '',
+        city:'',
+        phoneNumber:'',
+    }
+    return shippingInfo;
+}
+
+export const setPayment = ({
+    paymentMethod = 'paypal'
+}) => {
+    localStorage.setItem('paymentInfo', JSON.stringify({ paymentMethod }))
+}
+
+//obtener datos de envio
+export const getPaymentInfo = () => {
+    const paymentInfo = localStorage.getItem('paymentInfo') 
+    ? JSON.parse(localStorage.getItem('paymentInfo'))
+    : { paymentMethod: 'paypal' }
+    return paymentInfo;
 }

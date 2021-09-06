@@ -1,6 +1,6 @@
 import { register } from "../api";
 import { getUserInfo, setUserInfo } from "../localStorage";
-import { hideLoading, showLoading, showMessage } from "../utils";
+import { hideLoading, redirectUser, showLoading, showMessage } from "../utils";
 
 const RegisterScreen = {
     after_render: () => {
@@ -27,7 +27,7 @@ const RegisterScreen = {
             }else{
                 //guardamos en localStorage
                 setUserInfo(data);
-                document.location.hash = '/';
+                redirectUser();
             }
         });
 
@@ -36,7 +36,7 @@ const RegisterScreen = {
         //si la función devuelve el valor de name, quiere decir que el usuario está logeado ya. 
         //(por la respuesta del back almacenada en el localStorage)
         if(getUserInfo().name){
-          return document.location.hash = '/';
+          redirectUser();
         };
         return `
             <div class="form-container">

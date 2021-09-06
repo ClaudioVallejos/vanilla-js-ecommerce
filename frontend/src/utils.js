@@ -1,3 +1,5 @@
+import { getCartItems } from "./localStorage";
+
 //función que detecta el cambio de la url y obtiene los atributos correspondientes
 export const parseRequestUrl = () => {
     const url = document.location.hash.toLowerCase();
@@ -49,6 +51,12 @@ export const showMessage = (message, callback = false) => {
             callback();
         }
     })
+}
 
-
+export const redirectUser = () => {
+    if(getCartItems().length !== 0){
+        document.location.hash = '/shipping'
+    }else{
+        document.location.hash = '/'
+    }
 }

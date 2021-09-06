@@ -289,7 +289,7 @@ footer {
 .form-container{
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   /* no puede ser auto, porque auto se ajusta al tamaño voluble del componente*/
   height: 100%;
 }
@@ -312,4 +312,26 @@ footer {
 }
 .form-items h1{
   font-size: 2.1rem;
+}
+
+/* Checkout compra final */
+
+.checkout-steps{
+  display: flex;
+  justify-content: space-between;
+  width: 40%;
+  margin: 1rem auto;
+}
+
+.checkout-steps > div {
+  border-top: 0.3rem #c0c0c0 solid;
+  color: #c0c0c0;
+  flex: 1 1;
+  padding-top: 1rem;
+  text-align: center;
+}
+.checkout-steps > div.active {
+  border-top: 0.3rem #f08000 solid;
+  color: #f08000;
+
 }
