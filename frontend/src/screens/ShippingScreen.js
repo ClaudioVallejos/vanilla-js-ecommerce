@@ -7,7 +7,6 @@ const ShippingScreen = {
 
         //para el update del usuario capturamos el evento submit del formulario
         //ejecutamos una funcion asincrona de que hace el update en api.js
-        console.log("entré en el after_render");
         document.getElementById('shipping-form')
             .addEventListener('submit', async (e) => {
                 e.preventDefault();
