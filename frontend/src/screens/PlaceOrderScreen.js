@@ -1,21 +1,23 @@
-import { getCartItems, getPaymentInfo, getShippingInfo } from '../localStorage';
+import { cleanCart, getCartItems, getPaymentInfo, getShippingInfo } from '../localStorage';
 import CheckoutSteps from '../components/CheckoutSteps';
+import { showLoading, hideLoading, showMessage } from '../utils';
+import { createOrder } from '../api';
 
 const convertCartToOrder = () => {
     //si no hay items redirigimos al carro
     const orderItems = getCartItems();
     if (orderItems.length === 0) {
-        document.location.hash('/cart');
+        document.location.hash = '/cart';
     }
     //si no hay ddireccion registrada redirect al formulario
     const shippingInfo = getShippingInfo();
     if (!shippingInfo.address) {
-        document.location.hash('/shipping');
+        document.location.hash = '/shipping';
     }
     //si no hay metodo de pago registrado redirigimos a la pantalla de pago
     const paymentInfo = getPaymentInfo();
     if (!paymentInfo.paymentMethod) {
-        document.location.hash('/payment');
+        document.location.hash = '/payment';
     }
     //precio los items en el carro
     const itemsPrice = orderItems.reduce((acumulator, current) => acumulator + current.price * current.qty, 0);
@@ -38,7 +40,22 @@ const convertCartToOrder = () => {
 }
 
 const PlaceOrderScreen = {
-    after_render: () => { },
+    after_render: async () => {
+
+        document.getElementById('placeorder-button').addEventListener('click', async () => {
+            //obtener la orden una vez cargue la pagina
+            const order = convertCartToOrder();
+            showLoading();
+            const data = await createOrder(order);
+            hideLoading();
+            if (data.error) {
+                showMessage(data.error);
+            } else {
+                cleanCart();
+                document.location.hash = `/order/${data.order._id}`;
+            }
+        });
+    },
     render: () => {
         const {
             orderItems,
@@ -101,7 +118,7 @@ const PlaceOrderScreen = {
                             <li> <div>reparto </div>$ ${shippingPrice} </li>
                             <li> <div>IVA </div>$ ${ivaPrice} </li>
                             <li class="total"> <div>Total </div>$ ${totalPrice}  </li>
-                            <li><button class="primary fw"> ordenar pedido </button></li>
+                            <li><button id="placeorder-button" class="primary fw"> ordenar pedido </button></li>
                         </ul>
                     </div>
                 </div>

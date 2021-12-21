@@ -115,3 +115,31 @@ export const update = async ({name, email, password}) => {
     return {error :  err.response.data.message || err.message};
   }
 }
+
+//registro de usuario
+export const createOrder = async (order) => {
+  const {token} = getUserInfo();
+  let changeableUrl = `${apiUrl}/api/orders`;
+  try {
+      const response = await axios({
+      url: changeableUrl,
+      method: 'POST',
+      //MUCHO OJO CON LOS HEADERS CUANDO NO LLEGUE LA INFO AL BACK
+      headers: {
+        'Content-Type': 'Application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      data: order,
+   });
+    //si la solicitud no viene con status OK! creamos un nuevo error con el mensaje de error
+    //proveniente del backend
+   if(response.statusText !== "OK"){
+     throw new Error(response.data.message);
+   }
+   //de otra forma devuelveme la data
+   return response.data;
+  } catch (err) {
+    console.log(err);
+    return {error : err.response ? err.response.data.message :err.message};
+  }
+}

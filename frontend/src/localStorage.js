@@ -71,3 +71,7 @@ export const getPaymentInfo = () => {
     : { paymentMethod: 'paypal' }
     return paymentInfo;
 }
+
+export const cleanCart = () => {
+    localStorage.removeItem('cartItems');
+}
